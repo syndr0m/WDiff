@@ -1,12 +1,12 @@
 Web-Diff
 ========
 
-Try it on [http://www.locuspokus.com:8888/](http://www.locuspokus.com:8888/).
+Try it on [http://locuspokus.com:8888/](http://locuspokus.com:8888/).
 
 Experiment
 ----------
 
-Drag&Drop a json configuration file [https://raw.github.com/syndr0m/WDiff/master/static/examples/google.json](example) on it, or enter it manually
+Drag&Drop a json configuration file [example](https://raw.github.com/syndr0m/WDiff/master/static/examples/google.json) on it, or enter it manually
 
 Screenshot :
 
@@ -85,15 +85,15 @@ Multiple WDiff (1 similar, 1 difference) :
 Install / Dependency
 --------------------
 
-[http://nodejs.org/](nodejs), [http://expressjs.com/](expresjs), ejs, [http://nowjs.org/](nowjs), 
+[nodejs](http://nodejs.org/), [expresjs](http://expressjs.com/), ejs, [nowjs](http://nowjs.org/), 
 
-[https://github.com/joyent/node/wiki/Installation](install nodejs)
-[http://npmjs.org/](install npm)
+[install nodejs](https://github.com/joyent/node/wiki/Installation)
+[install npm](http://npmjs.org/)
 npm install express
 npm install ejs
 npm install now
 
-/!\ phantomjs requires X, so if you have no screen/inputs, you can use xvfb (thanks [https://github.com/neonux](@neonux))
+/!\ phantomjs requires X, so if you have no screen/inputs, you can use xvfb (thanks [@neonux](https://github.com/neonux))
 
 Xvfb :1 &
 export DISPLAY=:1
