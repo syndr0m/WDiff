@@ -42,13 +42,9 @@ page.open(address, function (status) {
          if (options.toHide) {
             inject(function () {
                options.toHide.forEach(function (selector) {
-                  console.log('selector : '+selector)
-                  var l = document.querySelectorAll(selector);
+                  var l = document.querySelectorAll(selector)
                   for (var i = 0; i < l.length; ++i)
-                  {
-                     console.log('display none')
                      l[i].style.display = "none"
-                  }
                })
             }, options);
          }
