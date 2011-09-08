@@ -1,8 +1,10 @@
-# Web-Diff
+Web-Diff
+========
 
 Try it on [http://www.locuspokus.com:8888/](http://www.locuspokus.com:8888/).
 
-## Experiment
+Experiment
+----------
 
 Drag&Drop a json configuration file [https://raw.github.com/syndr0m/WDiff/master/static/examples/google.json](example) on it, or enter it manually
 
@@ -80,7 +82,8 @@ Multiple WDiff (1 similar, 1 difference) :
 ]
 ```
 
-## Install / Dependency
+Install / Dependency
+--------------------
 
 [http://nodejs.org/](nodejs), [http://expressjs.com/](expresjs), ejs, [http://nowjs.org/](nowjs), 
 
@@ -96,7 +99,8 @@ Xvfb :1 &
 export DISPLAY=:1
 node server.js
 
-## License
+License
+-------
 
 (The MIT License)
 
