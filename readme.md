@@ -1,20 +1,101 @@
 # Web-Diff
 
-Try it on [http://wdiff.locuspokus.com](http://wdiff.locuspokus.com).
+Try it on [http://www.locuspokus.com:8888/](http://www.locuspokus.com:8888/).
 
 ## Experiment
 
-Drag&Drop a config file on it, or enter your config manually
+Drag&Drop a json configuration file [https://raw.github.com/syndr0m/WDiff/master/static/examples/google.json](example) on it, or enter it manually
 
-## Dependency
+Screenshot 
+``` js
+[
+   {
+      "url" :  "http://www.google.com"
+   }
+]
+```
 
-nodejs, expresjs, ejs, nowjs, phantomjs (X:server installed)
+Multiple screenshots
+``` js
+[
+   {
+      "url" :  "http://www.google.com"
+   },
+   {
+      "url" : "http://news.google.com"
+   }
+]
+```
+
+Screenshot with options :
+``` js
+[
+   {
+      "url" :  "http://www.google.com",
+      "options" : { "toHide" : [ "input[type=submit]" ] }
+   }
+]
+```
+
+WDiff (1 difference)
+```
+[
+   [
+      {
+         "url" :  "http://www.google.com"
+      },
+      {
+         "url" : "http://www.google.com",
+         "options" : { "toHide" : [ "input[type=submit]" ] }
+      }
+   ]
+]
+```
+
+Multiple WDiff (1 similar, 1 difference)
+```
+[
+   [
+      {
+         "url" :  "http://www.google.com"
+      },
+      {
+         "url" :  "http://www.google.com"
+      }
+   ],
+   [
+      {
+         "url" :  "http://www.google.com"
+      },
+      {
+         "url" : "http://www.google.com",
+         "options" : { "toHide" : [ "input[type=submit]" ] }
+      }
+   ]
+]
+```
+
+## Install / Dependency
+
+[http://nodejs.org/](nodejs), [http://expressjs.com/](expresjs), ejs, [http://nowjs.org/](nowjs), 
+
+[https://github.com/joyent/node/wiki/Installation](install nodejs)
+[http://npmjs.org/](install npm)
+npm install express
+npm install ejs
+npm install now
+
+/!\ phantomjs requires X, so if you have no screen/inputs, you can use xvfb (thanks [https://github.com/neonux](@neonux))
+
+Xvfb :1 &
+export DISPLAY=:1
+node server.js
 
 ## License
 
 (The MIT License)
 
-Copyright (c) 2011 by &lt;marc.dassonneville@gmail.com&gt;
+Copyright (c) 2011 by &lt;dassonneville@lemonde.fr&gt;
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
