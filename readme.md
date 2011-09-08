@@ -6,7 +6,8 @@ Try it on [http://www.locuspokus.com:8888/](http://www.locuspokus.com:8888/).
 
 Drag&Drop a json configuration file [https://raw.github.com/syndr0m/WDiff/master/static/examples/google.json](example) on it, or enter it manually
 
-Screenshot 
+Screenshot :
+
 ``` js
 [
    {
@@ -15,7 +16,8 @@ Screenshot
 ]
 ```
 
-Multiple screenshots
+Multiple screenshots :
+
 ``` js
 [
    {
@@ -28,6 +30,7 @@ Multiple screenshots
 ```
 
 Screenshot with options :
+
 ``` js
 [
    {
@@ -37,8 +40,9 @@ Screenshot with options :
 ]
 ```
 
-WDiff (1 difference)
-```
+WDiff (1 difference) :
+
+``` js
 [
    [
       {
@@ -52,8 +56,9 @@ WDiff (1 difference)
 ]
 ```
 
-Multiple WDiff (1 similar, 1 difference)
-```
+Multiple WDiff (1 similar, 1 difference) :
+
+``` js
 [
    [
       {
