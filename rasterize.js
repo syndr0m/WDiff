@@ -16,7 +16,7 @@ options = JSON.parse(options)
 options = options || { }, options.page = options.page || { }
 
 // configuration
-page.viewportSize = options.page.viewportSize || { width: 1280, height: 1024 };
+page.viewportSize = options.page.viewportSize || { width: 800, height: 600 };
 for (s in options.page.settings) {
    page.settings[s] = options.page.settings[s]
 }

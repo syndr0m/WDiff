@@ -3,25 +3,21 @@
 <title>Welcome to W-Diff</title>
 <style type="text/css">
    #dropbox {
-      width: 100%;
-      height: 50px;
+      width: 100%; height: 50px;
       border: 2px solid #4B8A08;
-      background-color: #ACFA58;
-      text-align: center;
-      color: #0B3B17;
-      font-size: 2em;
-      font-family: Arial, sans-serif;
+      color: #0B3B17; background-color: #ACFA58;
+      text-align: center; font-size: 2em; font-family: Arial, sans-serif;
    }
 
    #json {
-      width:100%;
-      height: 50px;
+      width:100%; height: 150px;
    }
 </style>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
 <script type="text/javascript" src="/nowjs/now.js"></script>
 <script type="text/javascript">
    var parse, stop = function (e) { e.stopPropagation(); e.preventDefault() }
+     , infos = { screenshots : [], wdiff : { similar : [], different : [] } }
 
    Number.between = function (min, max) { return Math.floor(Math.random() * (max - min + 1)) + min }
 
@@ -50,9 +46,8 @@
                return
             }
             //
-            $("#render").empty()
+            $("#render,#info").empty()
             //
-            $("#info").html("Parsing json.")
             JSON.parse($("#json").val()).forEach(function (entry) {
                if (entry instanceof Array)
                   wdiff(entry[0], entry[1])
@@ -68,12 +63,76 @@
             $("#render").append('<div id="'+id+'"><img src="/static/throbber.gif"</div>')
             now.screenshot(entry.url, entry.options, function (src) {
                $("#"+id).html('<img src="'+src+'"/>')
+               //
+               infos.screenshots.push("#"+id)
+               updateInformations()
             })
          }
 
          function wdiff(entryA, entryB)
          {
-            $("#render").append('wdiff, entryA = <pre>'+entryA+'</pre> entryB = <pre>'+entryB+'</pre>')
+            var imgs = [], id = "screenshot_"+Number.between(0, 1000000)
+            $("#render").append('wdiff, <i>'+JSON.stringify(entryA)+'</i> VS <i>'+JSON.stringify(entryB)+'</i>')
+            $("#render").append('<div id="'+id+'"><img src="/static/throbber.gif"/></div>')
+            function loadImage(src, position) {
+               var img = new Image()
+               img.onload = function () {
+                  imgs[position] = img
+                  if (imgs[0] && imgs[1])
+                     onBothLoaded(imgs[0], imgs[1])
+               }
+               img.src = src
+            }
+            function onBothLoaded(imgA, imgB) {
+               var canvas = document.createElement('canvas')
+                  , width = Math.max(imgA.width, imgB.width)
+                  , height = Math.max(imgA.height, imgB.height)
+
+               canvas.width = width
+               canvas.height = height
+               var ctx = canvas.getContext("2d")
+               ctx.drawImage(imgB, 0, 0)
+               var dataB = ctx.getImageData(0, 0, width, height).data
+               canvas.width = width // reset
+               ctx = canvas.getContext("2d")
+               ctx.drawImage(imgA, 0, 0)
+               var canvasData = ctx.getImageData(0, 0, width, height)
+               var dataA = canvasData.data
+               // diff loop
+               var similar = true
+               for (var x = 0; x < width; ++x) {
+                  for (var y = 0; y < height; ++y) {
+                     var idx = (x + y * width) * 4
+                     if (dataA[idx]   != dataB[idx]   ||
+                         dataA[idx+1] != dataB[idx+1] ||
+                         dataA[idx+2] != dataB[idx+2] ||
+                         dataA[idx+3] != dataB[idx+3]) {
+                        dataA[idx] = dataA[idx+3] = 255
+                        dataA[idx+1] = dataA[idx+2] = 0;
+                        similar = false
+                     }
+                  }
+               }
+               ctx.putImageData(canvasData, 0, 0)
+               $("#"+id).html(canvas)
+               //
+               infos.wdiff[similar?'similar':'different'].push("#"+id)
+               updateInformations()
+            }
+            now.screenshot(entryA.url, entryA.options, function (src) { loadImage(src, 0) });
+            now.screenshot(entryB.url, entryB.options, function (src) { loadImage(src, 1) });   
+         }
+
+         function updateInformations()
+         {
+            $("#info").empty()
+            if (infos.screenshots.length)
+               $("#info").append(infos.screenshots.length+ " screenshots rendered.<br/>")
+            if (infos.wdiff.similar.length || infos.wdiff.different.length)
+               $("#info").append("wdiff: "+infos.wdiff.similar.length+ " similar / "+infos.wdiff.different.length + " different<br/>")
+            // linking to differents
+            var links = infos.wdiff.different.map(function (selector, idx) { return '<a href="'+selector+'">'+(idx+1)+'</a>' }).join(",")
+            $("#info").append(links)
          }
       })
    });
