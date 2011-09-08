@@ -85,11 +85,9 @@ Multiple WDiff (1 similar, 1 difference) :
 Install / Dependency
 --------------------
 
-[nodejs](http://nodejs.org/), [expresjs](http://expressjs.com/), ejs, [nowjs](http://nowjs.org/), 
+[nodejs](http://nodejs.org/), [expresjs](http://expressjs.com/), ejs, [nowjs](http://nowjs.org/), [phantomjs](www.phantomjs.org/)
 
-[install nodejs](https://github.com/joyent/node/wiki/Installation)
-
-[install npm](http://npmjs.org/) &amp; npm install now express ejs
+first, [install nodejs](https://github.com/joyent/node/wiki/Installation), then [install npm](http://npmjs.org/) &amp; do : npm install now express ejs
 
 /!\ phantomjs requires X, so if you have no screen/inputs, you can use xvfb (thanks [@neonux](https://github.com/neonux))
 
