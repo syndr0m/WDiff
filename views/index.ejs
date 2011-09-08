@@ -1,28 +1,83 @@
 <html>
 <head>
-<title>W-Diff</title>
+<title>Welcome to W-Diff</title>
+<style type="text/css">
+   #dropbox {
+      width: 100%;
+      height: 50px;
+      border: 2px solid #4B8A08;
+      background-color: #ACFA58;
+      text-align: center;
+      color: #0B3B17;
+      font-size: 2em;
+      font-family: Arial, sans-serif;
+   }
+</style>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
 <script type="text/javascript" src="/nowjs/now.js"></script>
 <script type="text/javascript">
+   var stop = function (e) { e.stopPropagation(); e.preventDefault() }
+
+   Number.between = function (min, max) { return Math.floor(Math.random() * (max - min + 1)) + min }
+
    $(document).ready(function () {
       now.ready(function () {
+         $("#dropbox").bind("dragenter dragover dragexit", stop)
+         $("#dropbox").bind("drop", function (e) {
+            stop(e)
+            //
+            var file = e.originalEvent.dataTransfer.files[0];
+            $("#info").html("Reading "+file.name)
+            // reading dropped file.
+            var reader = new FileReader()
+            reader.onloadend = function (e) { load(file.name, e.target.result) }
+            reader.readAsText(e.originalEvent.dataTransfer.files[0])
+         })
+
+         function load(filename, json)
+         {
+            $("#info").html("Loading "+filename+" tests.<br/><pre>"+json+"</pre>")
+            JSON.parse(json).forEach(function (entry) {
+               if (entry instanceof Array)
+                  wdiff(entry[0], entry[1])
+               else
+                  screenshot(entry)
+            })
+         }
+
+         function screenshot(entry)
+         {
+            var id = "screenshot_"+Number.between(0, 1000000)
+            $("#render").append('screenshot, entry = <pre>'+JSON.stringify(entry)+'</pre>')
+            $("#render").append('<div id="'+id+'"><img src="/static/throbber.gif"</div>')
+            now.screenshot(entry.url, entry.options, function (src) {
+               $("#"+id).html('<img src="'+src+'"/>')
+            })
+         }
+
+         function wdiff(entryA, entryB)
+         {
+            $("#render").append('wdiff, entryA = <pre>'+entryA+'</pre> entryB = <pre>'+entryB+'</pre>')
+         }
+/*
+
          $('input[type=submit]').click(function () {
-            now.screenshot($("#urlA input").val())
+            //now.screenshot($("#urlA input").val())
+            now.screenshot("http://www.lemonde.fr", { toHide : "#surfooter" })
          }).show();
          
          now.display_screenshot = function (url, urlScreenshot) {
             $("#urlA img").attr('src', urlScreenshot)
          }
+*/
       })
    });
 </script>
 </head>
 <body>
-   Welcome.
-   <div id="form">
-      <div id="urlA">url A : <input id="urlA" type="text"/><img src="static/throbber.gif"/></div>
-      <!-- <div id="urlB">url B : <input id="urlB" type="text"/></div> -->
-      <input id="submit" type="submit" style="display:none"/>
+   <div id="dropbox">Please, drop your test file here.</div>
+   <div id="info"></div>
+   <div id="render">
    </div>
 </body>
 </html>
