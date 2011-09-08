@@ -28,6 +28,7 @@
             //
             var file = e.originalEvent.dataTransfer.files[0];
             $("#info").html("Reading "+file.name)
+            $("#render").empty()
             // reading dropped file.
             var reader = new FileReader()
             reader.onloadend = function (e) { load(file.name, e.target.result) }
@@ -36,6 +37,12 @@
 
          function load(filename, json)
          {
+            try { JSON.parse(json) }
+            catch (e) {
+               $("#info").html('json parse error ('+e+')')
+               return
+            }
+            //
             $("#info").html("Loading "+filename+" tests.<br/><pre>"+json+"</pre>")
             JSON.parse(json).forEach(function (entry) {
                if (entry instanceof Array)
