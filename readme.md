@@ -1,7 +1,7 @@
 Web-Diff
 ========
 
-Try it on [http://locuspokus.com:8888/](http://locuspokus.com:8888/).
+Try it on [http://locuspokus.com:8888/](http://locuspokus.com:8888/)
 
 Experiment
 ----------
@@ -88,10 +88,8 @@ Install / Dependency
 [nodejs](http://nodejs.org/), [expresjs](http://expressjs.com/), ejs, [nowjs](http://nowjs.org/), 
 
 [install nodejs](https://github.com/joyent/node/wiki/Installation)
-[install npm](http://npmjs.org/)
-npm install express
-npm install ejs
-npm install now
+
+[install npm](http://npmjs.org/) &amp; npm install now express ejs
 
 /!\ phantomjs requires X, so if you have no screen/inputs, you can use xvfb (thanks [@neonux](https://github.com/neonux))
 
