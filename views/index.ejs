@@ -1,0 +1,28 @@
+<html>
+<head>
+<title>W-Diff</title>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+<script type="text/javascript" src="/nowjs/now.js"></script>
+<script type="text/javascript">
+   $(document).ready(function () {
+      now.ready(function () {
+         $('input[type=submit]').click(function () {
+            now.screenshot($("#urlA input").val())
+         }).show();
+         
+         now.display_screenshot = function (url, urlScreenshot) {
+            $("#urlA img").attr('src', urlScreenshot)
+         }
+      })
+   });
+</script>
+</head>
+<body>
+   Welcome.
+   <div id="form">
+      <div id="urlA">url A : <input id="urlA" type="text"/><img src="static/throbber.gif"/></div>
+      <!-- <div id="urlB">url B : <input id="urlB" type="text"/></div> -->
+      <input id="submit" type="submit" style="display:none"/>
+   </div>
+</body>
+</html>
