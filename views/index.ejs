@@ -39,7 +39,8 @@
 
          parse = function parse()
          {
-            try { JSON.parse($("#json").val()) }
+            var json = $("#json").val().replace(/\/\*[^/]*\*\//g, '') // remove this regexp to allow /* */ in options.
+            try { JSON.parse(json) }
             catch (e) {
                $("#info").html("json parse error ("+e+")")
                return
@@ -48,7 +49,7 @@
             $("#render,#info").empty()
             infos = { screenshots : [], wdiff : { similar : [], different : [] } }
             //
-            JSON.parse($("#json").val()).forEach(function (entry) {
+            JSON.parse(json).forEach(function (entry) {
                if (entry instanceof Array)
                   wdiff(entry[0], entry[1])
                else
