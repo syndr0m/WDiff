@@ -16,8 +16,7 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
 <script type="text/javascript" src="/nowjs/now.js"></script>
 <script type="text/javascript">
-   var parse, stop = function (e) { e.stopPropagation(); e.preventDefault() }
-     , infos = { screenshots : [], wdiff : { similar : [], different : [] } }
+   var parse, infos, stop = function (e) { e.stopPropagation(); e.preventDefault() }
 
    Number.between = function (min, max) { return Math.floor(Math.random() * (max - min + 1)) + min }
 
@@ -47,6 +46,7 @@
             }
             //
             $("#render,#info").empty()
+            infos = { screenshots : [], wdiff : { similar : [], different : [] } }
             //
             JSON.parse($("#json").val()).forEach(function (entry) {
                if (entry instanceof Array)
