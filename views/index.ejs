@@ -72,7 +72,8 @@
          function wdiff(entryA, entryB)
          {
             var imgs = [], id = "screenshot_"+Number.between(0, 1000000)
-            $("#render").append('wdiff, <i>'+JSON.stringify(entryA)+'</i> VS <i>'+JSON.stringify(entryB)+'</i>')
+            $("#render").append('wdiff, <a href="'+entryA.url+'"><i>'+JSON.stringify(entryA)+'</i></a> \
+                                     VS <a href="'+entryB.url+'"><i>'+JSON.stringify(entryB)+'</i></a>')
             $("#render").append('<div id="'+id+'"><img src="/static/throbber.gif"/></div>')
             function loadImage(src, position) {
                var img = new Image()
