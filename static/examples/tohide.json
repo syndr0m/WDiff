@@ -1,8 +1,0 @@
-[
-   {
-      "url" :  "http://localhost:8888/static/examples/tohide.html",
-      "options" : {
-         "toHide" : [ "#foo", ".bar", "div[foo=bar]" ]
-      }
-   }
-]

@@ -1,0 +1,8 @@
+[
+   {
+      "url" :  "http://localhost:8888/static/examples/hide.html",
+      "options" : {
+         "hide" : [ "#foo", ".bar", "div[foo=bar]" ]
+      }
+   }
+]

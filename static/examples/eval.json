@@ -1,0 +1,8 @@
+[
+   {
+      "url" :  "http://localhost:8888/static/examples/eval.html",
+      "options" : {
+         "eval" : "$(document.body).css('background-color', 'white')"
+      }
+   }
+]

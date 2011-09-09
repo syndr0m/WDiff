@@ -8,7 +8,7 @@ Experiment
 
 Drag&Drop a json configuration file [example](https://raw.github.com/syndr0m/WDiff/master/static/examples/google.json) on it, or enter it manually
 
-Screenshot :
+# Screenshot
 
 ``` js
 [
@@ -18,7 +18,7 @@ Screenshot :
 ]
 ```
 
-Multiple screenshots :
+Multiples :
 
 ``` js
 [
@@ -31,16 +31,35 @@ Multiple screenshots :
 ]
 ```
 
-Screenshot with options :
+# options
+
+hide :
 
 ``` js
 [
    {
-      "url" :  "http://www.google.com",
-      "options" : { "toHide" : [ "input[type=submit]" ] }
+      "url" :  "http://localhost:8888/static/examples/hide.html",
+      "options" : {
+         "hide" : [ "#foo", ".bar", "div[foo=bar]" ]
+      }
    }
 ]
 ```
+
+eval :
+
+``` js
+[
+   {
+      "url" :  "http://localhost:8888/static/examples/eval.html",
+      "options" : {
+         "eval" : "$(document.body).css('background-color', 'green')"
+      }
+   }
+]
+```
+
+# WDiff
 
 WDiff (1 difference) :
 
@@ -52,7 +71,7 @@ WDiff (1 difference) :
       },
       {
          "url" : "http://www.google.com",
-         "options" : { "toHide" : [ "input[type=submit]" ] }
+         "options" : { "hide" : [ "input[type=submit]" ] }
       }
    ]
 ]
@@ -76,7 +95,7 @@ Multiple WDiff (1 similar, 1 difference) :
       },
       {
          "url" : "http://www.google.com",
-         "options" : { "toHide" : [ "input[type=submit]" ] }
+         "options" : { "hide" : [ "input[type=submit]" ] }
       }
    ]
 ]
@@ -94,6 +113,15 @@ first, [install nodejs](https://github.com/joyent/node/wiki/Installation), then 
 Xvfb :1 &
 export DISPLAY=:1
 node server.js
+
+Not Yet Implemented
+-------------------
+
+o toEvaluate()  ex: $("body").css("background", "none")
+o comments ds le json.
+o cache ? (sha1 sur les urls?)
+o cookies
+o UserAgent
 
 License
 -------

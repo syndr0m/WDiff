@@ -1,0 +1,18 @@
+[
+   {
+      "url" :  "http://www.google.com"
+   },
+   {
+      "url" : "http://www.google.com",
+      "options" : { "hide" : [ "input[type=submit]" ] }
+   },
+   [
+      {
+         "url" :  "http://www.google.com"
+      },
+      {
+         "url" : "http://www.google.com",
+         "options" : { "hide" : [ "input[type=submit]" ] }
+      }
+   ]
+]

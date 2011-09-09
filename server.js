@@ -9,7 +9,7 @@ var phantomProcess = 5
 /**
  * @param url string
  * @param options { page : { settings : { viewportSize : { ... }, userAgent : { ... } }, 
- *                  toHide : [ "#selector1", ".selector2", ... ] }
+ *                  hide : [ "#selector1", ".selector2", ... ] }
  */
 everyone.now.screenshot = function (url, options, callback) {
    var client = this.now

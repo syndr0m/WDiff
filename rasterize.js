@@ -40,13 +40,19 @@ page.open(address, function (status) {
    } else {
       window.setTimeout(function () {
          // 
-         if (options.toHide) {
+         if (options.hide) {
             inject(function () {
-               options.toHide.forEach(function (selector) {
+               options.hide.forEach(function (selector) {
                   var l = document.querySelectorAll(selector)
                   for (var i = 0; i < l.length; ++i)
                      l[i].style.display = "none"
                })
+            }, options);
+         }
+         //
+         if (options.eval) {
+            inject(function () {
+               eval(options.eval)
             }, options);
          }
          // 
