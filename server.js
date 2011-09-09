@@ -15,8 +15,8 @@ everyone.now.screenshot = function (url, options, callback) {
    
    console.log('spawning ./phantomjs rasterize.js '+url+' '+screenshot+' '+JSON.stringify(options))
    var phantom = spawn('./phantomjs', ["rasterize.js", url, screenshot, JSON.stringify(options) ])
-   phantom.stdout.on('data', function (o) { console.log(o) })
-   phantom.on('exit', function () { callback("/"+screenshot) })
+   phantom.stdout.on('data', function (o) { console.log(o.toString('utf8')) })
+   phantom.on('exit', function (e) { callback(e?"/static/error.png":"/"+screenshot) })
 }
 
 server.use('/static', express.static(__dirname+'/static/'))
