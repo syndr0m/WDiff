@@ -7,9 +7,9 @@ output = phantom.args[1]
 options = phantom.args[2]
 
 console.log("PhantomJS: \n\
-adress=" + address + "\n\
-output=" + output  + "\n\
-options=" + options +" \n")
+  adress =" + address + "\n\
+  output =" + output  + "\n\
+  options=" + options +" \n")
 
 // 
 options = JSON.parse(options)
@@ -36,6 +36,7 @@ var inject = function (func, options) {
 page.open(address, function (status) {
    if (status !== 'success') {
       console.log('Unable to load the address!');
+      phantom.exit(1);
    } else {
       window.setTimeout(function () {
          // 
