@@ -117,8 +117,6 @@ node server.js
 Not Yet Implemented
 -------------------
 
-o toEvaluate()  ex: $("body").css("background", "none")
-o comments ds le json.
 o cache ? (sha1 sur les urls?)
 o cookies
 o UserAgent
