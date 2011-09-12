@@ -16,11 +16,15 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
 <script type="text/javascript" src="/nowjs/now.js"></script>
 <script type="text/javascript">
-   var parse, infos, stop = function (e) { e.stopPropagation(); e.preventDefault() }
+   var parse, infos, tpl, stop = function (e) { e.stopPropagation(); e.preventDefault() }
 
    Number.between = function (min, max) { return Math.floor(Math.random() * (max - min + 1)) + min }
 
    $(document).ready(function () {
+      tpl = { screenshot : $("#template-screenshot").html()
+            , wdiff : $("#template-wdiff").html()
+            , info : $("#template-info").html() }
+
       now.ready(function () {
          $("#dropbox").bind("dragenter dragover dragexit", stop)
          $("#dropbox").bind("drop", function (e) {
@@ -47,7 +51,7 @@
             }
             //
             $("#render,#info").empty()
-            infos = { screenshots : [], wdiff : { similar : [], different : [] } }
+            infos = { screenshots : 0, wdiff : { similar : 0, different : 0 } }
             //
             JSON.parse(json).forEach(function (entry) {
                if (entry instanceof Array)
@@ -59,23 +63,26 @@
 
          function screenshot(entry)
          {
-            var id = "screenshot_"+Number.between(0, 1000000)
-            $("#render").append('screenshot, entry = <pre>'+JSON.stringify(entry)+'</pre>')
-            $("#render").append('<div id="'+id+'"><img src="/static/throbber.gif"</div>')
+            var html = $(tpl.screenshot)
+            $(".json", html).html(JSON.stringify(entry))
+            $("#render").append(html)
             now.screenshot(entry.url, entry.options, function (src) {
-               $("#"+id).html('<img src="'+src+'"/>')
+               $("img", html).attr("src", src)
                //
-               infos.screenshots.push("#"+id)
+               infos.screenshots++
                updateInformations()
             })
          }
 
          function wdiff(entryA, entryB)
          {
-            var imgs = [], id = "screenshot_"+Number.between(0, 1000000)
-            $("#render").append('wdiff, <a href="'+entryA.url+'"><i>'+JSON.stringify(entryA)+'</i></a> \
-                                     VS <a href="'+entryB.url+'"><i>'+JSON.stringify(entryB)+'</i></a>')
-            $("#render").append('<div id="'+id+'"><img src="/static/throbber.gif"/></div>')
+            var imgs = [], entries = arguments
+               , html = $(tpl.wdiff)
+
+            $(".json", html).each(function (i) { $(this).html(JSON.stringify(entries[i])) })
+            $(".page", html).each(function (i) { $(this).attr("href", entries[i].url) })
+            $("#render").append(html)
+
             function loadImage(src, position) {
                var img = new Image()
                img.onload = function () {
@@ -84,6 +91,7 @@
                      onBothLoaded(imgs[0], imgs[1])
                }
                img.src = src
+               $($("a.img", html)[position]).attr("href", src)
             }
             function onBothLoaded(imgA, imgB) {
                var canvas = document.createElement('canvas')
@@ -126,9 +134,9 @@
                   }
                }
                ctx.putImageData(canvasData, 0, 0)
-               $("#"+id).html(canvas)
+               $(".render", html).html(canvas)
                //
-               infos.wdiff[similar?'similar':'different'].push("#"+id)
+               infos.wdiff[similar?'similar':'different']++
                updateInformations()
             }
             now.screenshot(entryA.url, entryA.options, function (src) { loadImage(src, 0) });
@@ -137,23 +145,51 @@
 
          function updateInformations()
          {
-            $("#info").empty()
-            if (infos.screenshots.length)
-               $("#info").append(infos.screenshots.length+ " screenshots rendered.<br/>")
-            if (infos.wdiff.similar.length || infos.wdiff.different.length)
-               $("#info").append("wdiff: "+infos.wdiff.similar.length+ " similar / "+infos.wdiff.different.length + " different<br/>")
-            // linking to differents
-            var links = infos.wdiff.different.map(function (selector, idx) { return '<a href="'+selector+'">'+(idx+1)+'</a>' }).join(",")
-            $("#info").append(links)
+            var html = $(tpl.info)
+            $("#nb_screenshots", html).html(infos.screenshots)
+            $("#nb_similar", html).html(infos.screenshots)
+            $("#nb_different", html).html(infos.different)
+            $("#info").html(html)
          }
       })
    });
 </script>
 </head>
 <body>
+   <!-- screenshot template -->
+   <script type="text/html" id="template-screenshot">
+      <div>
+         screenshot, json = <pre class="json"></pre>
+         <img src="/static/throbber.gif">
+      </div>
+   </script>
+
+   <!-- wdiff template -->
+   <script type="text/html" id="template-wdiff">
+      <div>
+         <table><tr><td><a class="json"></a></td>
+                     <td><a class="page">link</a></td>
+                     <td><a class="img">imgA</a></td></tr>
+                  <tr><td><a class="json"></a></td>
+                     <td><a class="page">link</a></td>
+                     <td><a class="img">imgA</a></td></tr></table>
+         <div class="render"><img src="/static/throbber.gif"/></div>
+      </div>
+   </script>
+
+   <!-- info template -->
+   <script type="text/html" id="template-info">
+      <div>
+         <span id="nb_screenshots">0</span> screenshots rendered.<br/>
+         <span id="nb_similar">0</span> similar / <span id="nb_different">0</span> different.<br/>
+      </div>
+   </script>
+
    <div id="dropbox">Please, drop your test file here.</div>
    <div><textarea id="json"></textarea><input type="submit" value="parse" onclick="parse()"/></div>
    <div id="info"></div>
-   <div id="render"></div>
+   <div id="render">
+      <!-- templates inserted here -->
+   </div>
 </body>
 </html>
