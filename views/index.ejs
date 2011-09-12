@@ -34,6 +34,7 @@
             , info : $("#template-info").html() }
 
       now.ready(function () {
+         $("input[type=submit]").show()
          $("#dropbox").bind("dragenter dragover dragexit", stop)
          $("#dropbox").bind("drop", function (e) {
             stop(e)
@@ -180,7 +181,7 @@
                      <td><a class="img">imgA</a></td></tr>
                   <tr><td><a class="json"></a></td>
                      <td><a class="page">link</a></td>
-                     <td><a class="img">imgA</a></td></tr></table>
+                     <td><a class="img">imgB</a></td></tr></table>
          <div class="render"><img src="/static/throbber.gif"/></div>
       </div>
    </script>
@@ -194,7 +195,7 @@
    </script>
 
    <div id="dropbox">Please, drop your test file here.</div>
-   <div><textarea id="json"></textarea><input type="submit" value="parse" onclick="parse()"/></div>
+   <div><textarea id="json"></textarea><input type="submit" value="parse" onclick="parse()" style="display:none"/></div>
    <div id="info"></div>
    <div id="render">
       <!-- templates inserted here -->
