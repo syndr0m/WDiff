@@ -58,6 +58,6 @@ page.open(address, function (status) {
          // 
          page.render(output);
          phantom.exit();
-      }, 200);
+      }, options.delay || 200);
    }
 });
