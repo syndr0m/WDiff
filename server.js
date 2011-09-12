@@ -4,7 +4,7 @@ var express = require('express')
    , spawn = require('child_process').spawn
    , everyone = nowjs.initialize(server)
 
-var phantomProcess = 5
+var phantomProcess = 8
 
 /**
  * @param url string
