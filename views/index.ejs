@@ -156,8 +156,8 @@
          {
             var html = $(tpl.info)
             $("#nb_screenshots", html).html(infos.screenshots)
-            $("#nb_similar", html).html(infos.screenshots)
-            $("#nb_different", html).html(infos.different)
+            $("#nb_similar", html).html(infos.wdiff.similar)
+            $("#nb_different", html).html(infos.wdiff.different)
             $("#info").html(html)
          }
       })
